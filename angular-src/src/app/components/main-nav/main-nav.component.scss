@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css?family=Contrail+One&display=swap');
+.sidenav-container {
+  height: 100%;
+}
+.top-nav{
+  position: fixed;
+}
+.sidenav {
+  width: 200px;
+}
+.spacer{
+  flex: 1 1 auto;
+}
+
+.sidenav .mat-toolbar {
+  background: inherit;
+}
+
+.mat-toolbar.mat-primary {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+.branding{
+  font-family: 'Contrail One';
+  margin-left: .5rem;
+  font-size: 1.7rem;
+  color:black;
+  //margin-top: .rem;
+}
+#shop-mart-logo{
+  font-size: 2rem;
+  margin-bottom: .5rem;
+  color: #b40163
+
+}
