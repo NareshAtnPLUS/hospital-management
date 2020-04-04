@@ -11,6 +11,7 @@ import { OtpComponent } from './components/account/forgot-password/otp/otp.compo
 import { UpdatePasswordComponent } from './components/account/forgot-password/update-password/update-password.component';
 import { OfferComponent } from './components/offer/offer.component';
 import { AdminComponent } from './components/admin/admin.component';
+import { AddAppointmentComponent } from './components/profile/add-appointment/add-appointment.component';
 
 const routes: Routes = [
   { path:'',component:HomeComponent },
@@ -26,7 +27,9 @@ const routes: Routes = [
     { path:'login',component:LoginComponent }
     ] 
   },
-  { path:'profile',component:ProfileComponent,canActivate:[AuthGuard] }
+  { path:'profile',component:ProfileComponent,canActivate:[AuthGuard],children:[
+    { path:'add-appointment',component:AddAppointmentComponent }
+  ] }
 ];
 
 @NgModule({

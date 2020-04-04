@@ -10,6 +10,7 @@ import { Res as ResOtp } from '../../components/account/forgot-password/otp/otp.
 import { Res as ResUpdatePassword } from '../../components/account/forgot-password/update-password/update-password.component';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Injectable({
   providedIn: 'root'
 })
@@ -20,9 +21,27 @@ export class HttpHandlerService {
     private http:HttpClient,
     private registerService:RegisterService,
     private flashMessage:NgFlashMessageService,
-    private authService:AuthService
+    private authService:AuthService,
+    private snackbar:MatSnackBar
   ) { }
   baseUrl = "http://127.0.0.1:5000";
+  getDoctors():Observable<any>{
+    return this.http.get<any>(`${this.baseUrl}/doctor/getDoctors`)
+      .pipe(retry(2),
+      catchError(this.errorHandler)
+    )
+  }
+  getAppointments(user):Observable<any>{
+    return this.http.get<any>(`${this.baseUrl}/${user.account_type.toLowerCase()}/getAppointments/${user.userName}`)
+      .pipe(retry(2),
+      catchError(this.errorHandler)
+    )
+  }
+  openSnackBar(message: string, action: string) {
+    this.snackbar.open(message, action, {
+      duration: 2000,
+    });
+  }
   flaskCheck():Observable<any>{
     return this.http.get<any>(`${this.baseUrl}/user/home`)
       .pipe(
@@ -137,6 +156,32 @@ export class HttpHandlerService {
         this.router.navigate(['/account/register']);
      });
   }
+  appointmentSubmitHandler(appointment){
+    const url = `${this.baseUrl}/doctor/register_appointment`
+    const req = this.http.post<any>(url,appointment).subscribe(
+      res =>{
+        if(res.success){
+          const msg = "Appointment fixed successfully"
+          const value = "Success"
+          this.openSnackBar(msg,value)
+          this.router.navigate(['/profile'])
+        } else{
+          const msg = "Appointment fixed successfully due to scheduling or unavailability of doctor"
+          const value = "Failed"
+          this.openSnackBar(msg,value)
+          this.router.navigate(['/profile/add-appointment'])
+        }
+      },
+      err =>{
+        const msg = "Appointment could not be fixed due to server errors"
+        const value = "Failed"
+        if(err){
+          this.openSnackBar(msg,value)
+          this.router.navigate(['/profile/add-appointment'])
+        }
+      }
+    )
+  }
   loginHttpHandler(user){
     
     const url = `http://localhost:5000/${user.accountType.toLowerCase()}/authenticate`;
@@ -151,7 +196,7 @@ export class HttpHandlerService {
           });
           if(user.accountType === 'User') this.router.navigate(['/profile']);
           else if(user.accountType === 'Admin') this.router.navigate(['/admin']);
-          else if(user.accountType === 'Doctor') this.router.navigate(['/doctorProfile']);
+          else if(user.accountType === 'Doctor') this.router.navigate(['/profile']);
         //console.log(res.msg, res.user);
         } else {
           this.flashMessage.showFlashMessage({

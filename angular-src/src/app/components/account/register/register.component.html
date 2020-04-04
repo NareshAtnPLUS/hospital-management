@@ -60,10 +60,12 @@
                 <input matInput type="text" formControlName="age" name="age" class="form-control" id="age" placeholder="Age" required>
             </mat-form-field>
             &nbsp;
-            <mat-form-field   class="col-xl-6">
+            <mat-form-field>
                 <mat-label>Date of Birth</mat-label>
-                <input matInput type="text" formControlName="dob" name="dob" class="form-control" id="dob" placeholder="Date of Birth" required>
-            </mat-form-field>
+                <input matInput formControlName="dob" [matDatepicker]="picker">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
         </div>
         <div *ngIf="accountType == 'Doctor'" class="row">
             <mat-form-field  class="col-xl-6" >

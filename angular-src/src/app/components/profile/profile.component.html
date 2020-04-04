@@ -1,88 +1,80 @@
-<section>
-    <div class="top-container">
-
-
-        <mat-card class="profile-card">
-            <mat-card-header>
-                <div mat-card-avatar class="avatar"></div>
-                <mat-card-title>Search Github Profile</mat-card-title>
-                <mat-card-subtitle>with username</mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content>
-                <form [formGroup]="profileSearchForm" (ngSubmit)="onSubmit()">
-                    <span class="search-button">
-                        <mat-form-field class="reg-full-width">
-                            <input matInput type="text" formControlName="userName" name="userName" class="form-control" id="userName" placeholder="Enter User Name" required>
-                        </mat-form-field>
-                    </span>
-                    <button [disabled]="!profileSearchForm.valid" mat-raised-button color="accent" class="button" type="submit">Search</button>
-                </form>
-            </mat-card-content>
-        </mat-card>
-        <mat-card class="nav-card">
-            <mat-card-header>
-                <div mat-card-avatar class="avatar"></div>
-                <mat-card-title>Search Github Profile</mat-card-title>
-                <mat-card-subtitle>with username</mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-content>
-                <form [formGroup]="profileSearchForm" (ngSubmit)="onSubmit()">
-                    <span class="search-button">
-                        <mat-form-field class="reg-full-width">
-                            <input matInput type="text" formControlName="userName" name="userName" class="form-control" id="userName" placeholder="Enter User Name" required>
-                        </mat-form-field>
-                    </span>
-                    <button [disabled]="!profileSearchForm.valid" mat-raised-button color="accent" class="button" type="submit">Search</button>
-                </form>
-            </mat-card-content>
-        </mat-card>
-    </div>
-</section>
-
-<!--<mat-card class="container profile-card">
-    <mat-card-header>
-        <div mat-card-avatar class="avatar"></div>
-        <mat-card-title>Search Github Profile</mat-card-title>
-        <mat-card-subtitle>with username</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-        <form [formGroup]="profileSearchForm" (ngSubmit)="onSubmit()">
-            <span class="search-button">
-                <mat-form-field class="reg-full-width">
-                    <input matInput type="text" formControlName="userName" name="userName" class="form-control" id="userName" placeholder="Enter User Name" required>
-                </mat-form-field>
-            </span>
-            <button [disabled]="!profileSearchForm.valid" mat-raised-button color="accent" class="button" type="submit">Search</button>
-        </form>
-    </mat-card-content>
-</mat-card>
-<br><br>
-<div *ngIf="githubUsers">
-
-    <mat-card class="container profile-card"     *ngFor="let item of githubUsers;">
+<div class="container">
+    <button id="appointment-button" mat-raised-button *ngIf="user.account_type === 'User';" routerLink="/profile/add-appointment" color="accent">Add An Appointment</button>
+    <router-outlet></router-outlet>
+    <app-show-appointment *ngIf="user.account_type === 'Doctor';"></app-show-appointment>
+    <mat-card>
         <mat-card-header>
-            <img src="{{item.avatar_url}}" mat-card-avatar alt="account-image">
-            <mat-card-title>{{item.login}}</mat-card-title>
-            <mat-card-subtitle>{{item.id}}</mat-card-subtitle>
+          <mat-card-title><h2>{{ user.firstName }} {{ user.lastName }}</h2></mat-card-title>
+          <mat-card-subtitle><h2>{{user.account_type}} Profile</h2></mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
-            <mat-accordion>
-                <mat-expansion-panel (opened)="panelOpenState = true"
-                    (closed)="panelOpenState = false">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            {{item.login}}
-                        </mat-panel-title>
-                        <mat-panel-description>
-                            {{item.id}}
-                        </mat-panel-description>
-                        </mat-expansion-panel-header>
-                        <p>URL: {{item.html_url}}</p>
-                        <p>Followers {{item.followers_url}}</p>
-                        <p>Following {{item.following_url}}</p>
-                        <p>Repos {{item.repos_url}}</p>
-                </mat-expansion-panel>
-            </mat-accordion>
+            <mat-list>
+                <mat-list-item>
+                  <span class="key"><h3>Name</h3></span>
+                  <span class="spacer"></span>
+                  <span class="value"><h5> {{user.firstName}} {{user.lastName}} </h5></span>
+                </mat-list-item>
+                <mat-list-item>
+                    <span class="key"><h3>Email</h3></span>
+                    <span class="spacer"></span>
+                    <span class="value"><h5> {{user.email}} </h5></span>
+                  </mat-list-item>
+                <mat-list-item>
+                    <span class="key"><h3>Username</h3></span>
+                    <span class="spacer"></span>
+                    <span class="value"><h5> {{user.userName}} </h5></span>
+                </mat-list-item>  
+                <mat-list-item>
+                    <span class="key"><h3>Door No</h3></span>
+                    <span class="spacer"></span>
+                    <span class="value"><p> {{user.door_no}}</p></span>
+                </mat-list-item>
+                <mat-list-item>
+                    <span class="key"><h3>Street</h3></span>
+                    <span class="spacer"></span>
+                    <span class="value"><p>{{user.street}}</p></span>
+                </mat-list-item>
+                <mat-list-item>
+                    <span class="key"><h3>State</h3></span>
+                    <span class="spacer"></span>
+                    <span class="value"><p> {{ user.state}}</p></span>
+                </mat-list-item>
+                <mat-list-item>
+                    <span class="key"><h3>Age</h3></span>
+                    <span class="spacer"></span>
+                    <span class="value"><p>{{ user.age }}</p></span>
+                </mat-list-item>
+                <mat-list-item *ngIf="user.account_type === 'User';">
+                    <span class="key"><h3>Height</h3></span>
+                    <span class="spacer"></span>
+                    <span class="value"><p>{{ user.height }}</p></span>
+                </mat-list-item>
+                <mat-list-item *ngIf="user.account_type === 'User';">
+                    <span class="key"><h3>Weight</h3></span>
+                    <span class="spacer"></span>
+                    <span class="value"><p> {{ user.weight }}</p></span>
+                </mat-list-item>
+                <mat-list-item *ngIf="user.account_type === 'User';">
+                    <span class="key"><h3>Medical Problems  </h3></span>
+                    <span class="spacer"></span>
+                    <span class="value"><p> {{ user.diseases }}</p></span>
+                </mat-list-item>
+                <mat-list-item *ngIf="user.account_type === 'Doctor';">
+                    <span class="key"><h3>Specialist</h3></span>
+                    <span class="spacer"></span>
+                    <span class="value"><p>{{ user.specialist }}</p></span>
+                </mat-list-item>
+                <mat-list-item *ngIf="user.account_type === 'Doctor';">
+                    <span class="key"><h3>Qualifications</h3></span>
+                    <span class="spacer"></span>
+                    <span class="value"><p>{{ user.qualifications }}</p></span>
+                </mat-list-item>
+                <mat-list-item *ngIf="user.account_type === 'Doctor';">
+                    <span class="key"><h3>No of Surgeries Done</h3></span>
+                    <span class="spacer"></span>
+                    <span class="value"><p> {{ user.no_of_surgeries }}</p></span>
+                </mat-list-item>              
+              </mat-list>            
         </mat-card-content>
     </mat-card>
-</div>-->
+</div>

@@ -35,7 +35,7 @@ export class RegisterComponent implements AfterViewInit {
     firstName:['',Validators.minLength(4)],
     height:['',Validators.minLength(4)],
     weight:['',Validators.minLength(4)],
-    age:['',Validators.minLength(4)],
+    age:['',Validators.minLength(2)],
     dob:['',Validators.minLength(4)],
     lastName:['',Validators.minLength(5)],
     userName:['',Validators.minLength(8)],
@@ -131,6 +131,7 @@ export class RegisterComponent implements AfterViewInit {
     })
     this.user = this.profileForm.value;
     userForm.accountType = this.accountType;
+    userForm.dob = userForm.dob.toLocaleDateString()
     console.log(userForm)
     await this.httpHandler.registerHttpHandler(userForm,this.accountType,this.profileForm);
     

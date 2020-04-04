@@ -22,7 +22,7 @@ class Doctors(db.Model, UserMixin):
     qualifications = db.Column(db.String(20),nullable=False)
     surgeries = db.Column(db.String(20),nullable=False)
     age = db.Column(db.String(5),nullable=False)
-    dob = db.Column(db.String(20),nullable=False)
+    dob = db.Column(db.String(100),nullable=False)
     Account_type = db.Column(db.String(20),nullable = False)
 
 

@@ -24,6 +24,8 @@ import { UpdatePasswordComponent } from './components/account/forgot-password/up
 import { OfferComponent } from './components/offer/offer.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { HttpHandlerService } from './services/http-handlers/http-handler.service';
+import { AddAppointmentComponent } from './components/profile/add-appointment/add-appointment.component';
+import { ShowAppointmentComponent } from './components/profile/show-appointment/show-appointment.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,8 @@ import { HttpHandlerService } from './services/http-handlers/http-handler.servic
     UpdatePasswordComponent,
     OfferComponent,
     AdminComponent,
+    AddAppointmentComponent,
+    ShowAppointmentComponent,
     
     
   ],

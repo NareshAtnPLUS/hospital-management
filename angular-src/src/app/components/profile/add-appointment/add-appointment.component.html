@@ -1,0 +1,51 @@
+<div class="container">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>
+                Book An Appointment
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="container">
+                <form [formGroup]="appointmentForm" (ngSubmit)="onAppointmentSubmit();">
+                    <div class="row">
+                        <mat-form-field class="log-full-width">
+                            <mat-label>Select Doctor</mat-label>
+                            <mat-select formControlName="doctorName">
+                              <mat-option *ngFor="let doctor of doctorsList" [value]="doctor.value">
+                                {{doctor.viewValue}}
+                              </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <mat-form-field class="log-full-width">
+                            <mat-label>Reason</mat-label>
+                            <input matInput type="text" formControlName="reason" name="reason" class="form-control" id="reason" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <mat-form-field>
+                            <mat-label>Appoinment date</mat-label>
+                            <input matInput formControlName="appointment_date" [matDatepicker]="picker">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                          </mat-form-field>
+                    </div>
+                    <div class="row">
+                        <mat-form-field class="log-full-width">
+                            <mat-label>Reason Description</mat-label>
+                            <textarea #reasonDescription maxlength="100" matInput type="text" formControlName="reasonDescription" name="reasonDescription" class="form-control" id="reasonDescription" required></textarea>
+                            <mat-hint align="start"><strong>Write your descriptions within 100 words.</strong> </mat-hint>
+                            <mat-hint align="end">{{reasonDescription.value.length}} / 100    </mat-hint>
+                        </mat-form-field>
+                    </div>
+                    <br>
+                    
+                    <button [disabled]="!appointmentForm.valid" mat-raised-button color="accent">Book An Appointment &nbsp;&nbsp;<i class="material-icons">lock_open</i></button>      
+                </form>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>
+<br><br>

@@ -3,13 +3,28 @@ from datetime import datetime, timedelta
 from hospital_management import webapp, db, bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
 from .utils import *
-
+from datetime import datetime
 doctors = Blueprint('doctors',__name__)
 
 
 @doctors.route("/home")
 def home():
     return jsonify({"message":"Hello World"})
+@doctors.route("/getDoctors")
+def list_doctors():
+    return jsonify({"doctors":query_doctors()})
+@doctors.route("/getAppointments/<doctorName>")
+def list_appointments(doctorName):
+    return jsonify({"appointments":query_appointments(doctorName)})
+@doctors.route("/register_appointment",methods=['GET', 'POST'])
+def add_appointment():
+    appointment_fixing_time = datetime.now()
+
+    time_stamp = appointment_fixing_time.strftime("%d/%m/%Y %H:%M:%S")
+    if book_appointment(request.json,time_stamp):
+        return jsonify({"success":True})
+    else:
+        return jsonify({"success":False})
 @doctors.route("/register",methods=['GET', 'POST'])
 def register():
     if request.method == "POST":

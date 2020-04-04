@@ -23,7 +23,11 @@ def login_user_util(req_json,account_type="User"):
     user = Users.query.filter_by(username=req_json["userName"],Account_type=account_type).first()
     if user and bcrypt.check_password_hash(user.password,req_json["password"]):
         login_user(user)
-        userObject = { "firstName":user.first_name,"lastName":user.last_name,"userName":user.username }
+        userObject = { "firstName":user.first_name,"lastName":user.last_name,
+                "userName":user.username,"height":user.height,"weight":user.weight,
+                "account_type":user.Account_type,"diseases":user.diseases,
+                "door_no":user.door_no,"street":user.street,"state":user.state,"email":user.email,
+                "age":user.age }
         return True,userObject
     else:
         return False,"No User Found with given login credentials"
